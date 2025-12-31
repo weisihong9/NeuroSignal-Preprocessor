@@ -13,6 +13,9 @@
 - 相关分析结果应结合具体实验设计与数据特性进行合理解释。
 - 如在使用过程中发现问题或有改进建议，欢迎反馈以协助改进。
 
+下载链接：通过网盘分享的文件：NeuroSignalPreprocessor.zip
+链接: https://pan.baidu.com/s/1Hz__D7FExQeWtObw0W0dwA 提取码: 3hnt 
+
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512311226899.png)
 
 ---
