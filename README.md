@@ -42,10 +42,12 @@
 
 ### 3.1 文件结构说明
 
-解压后目录结构如下：
-NeuroSignalPreprocessor/
-├─ NeuroSignalPreprocessor.exe
-├─ _internal/
+解压后目录结构如下： 
+```javascript
+NeuroSignalPreprocessor/  
+├─ NeuroSignalPreprocessor.exe  
+├─ _internal  
+```
 
 ⚠ **请勿单独移动或复制 exe 文件**，必须保留整个文件夹结构，否则软件将无法运行。
 
