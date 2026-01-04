@@ -14,7 +14,7 @@
 - 如在使用过程中发现问题或有改进建议，欢迎反馈以协助改进。
 
 下载链接：通过网盘分享的文件：NeuroSignalPreprocessor.zip
-链接: https://pan.baidu.com/s/1Hz__D7FExQeWtObw0W0dwA 提取码: 3hnt 
+链接: https://pan.baidu.com/s/19c2kUYGReK3o2YT6weL-yA?pwd=v9pj 提取码: v9pj 
 
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512311226899.png)
 
@@ -46,7 +46,8 @@
 ```javascript
 NeuroSignalPreprocessor/  
 ├─ NeuroSignalPreprocessor.exe  
-├─ _internal  
+├─ _internal
+├─ Example_data (示例数据)  
 ```
 
 ⚠ **请勿单独移动或复制 exe 文件**，必须保留整个文件夹结构，否则软件将无法运行。
