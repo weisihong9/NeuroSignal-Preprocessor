@@ -1,23 +1,25 @@
-# NeuroSignal-Preprocessor
+# Python 轻量级 UI：EEG 与 fNIRS 预处理图形界面
+# NeuroSignal Preprocessor 使用说明
+
 ---
 
 ## 1. 软件简介
 
 **NeuroSignal Preprocessor** 是一款用于 **EEG / fNIRS / EMG** 神经信号数据的桌面预处理与特征提取软件。
 
-本软件主要面向入门脑科学领域的科研人员，提供简洁的图形化界面，支持从数据加载、预处理到特征提取的完整流程，**无需安装 Python 环境**，双击即可运行。
+本软件面向科研人员与工程用户设计，提供图形化界面，支持从数据加载、预处理到特征提取的完整流程，**无需安装 Python 环境**，双击即可运行。
 
 - 本软件由作者在科研实践中自主开发并持续维护，主要用于神经信号数据预处理与特征分析研究。
 - 软件功能仍在不断完善中，由于实验条件与数据差异，在特定场景下可能存在未覆盖的边界情况。
 - **软件输出结果仅供科研与方法探索参考，不构成任何临床或商业用途的保证。**
 - 相关分析结果应结合具体实验设计与数据特性进行合理解释。
 - 如在使用过程中发现问题或有改进建议，欢迎反馈以协助改进。
-
+  
+```javascript
 下载链接：通过网盘分享的文件：NeuroSignalPreprocessor.zip
-链接: https://pan.baidu.com/s/19c2kUYGReK3o2YT6weL-yA?pwd=v9pj 提取码: v9pj 
+链接: https://pan.baidu.com/s/1SDxXkQKoeLO_LrW5JOGA9w?pwd=8gik 提取码: 8gik 
 
-![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512311226899.png)
-
+```
 ---
 
 ## 2. 系统要求与运行环境
@@ -42,16 +44,17 @@
 
 ### 3.1 文件结构说明
 
-解压后目录结构如下： 
+解压后目录结构如下：
 ```javascript
-NeuroSignalPreprocessor/  
-├─ NeuroSignalPreprocessor.exe  
-├─ _internal
-├─ Example_data (示例数据)  
+NeuroSignalPreprocessor/
+├─ NeuroSignalPreprocessor.exe
+├─ _internal/
+├─ Example_data/ (示例数据)
 ```
 
 ⚠ **请勿单独移动或复制 exe 文件**，必须保留整个文件夹结构，否则软件将无法运行。
 
+---
 
 ### 3.2 启动方式
 
@@ -70,7 +73,6 @@ NeuroSignalPreprocessor/
 点击对应模块即可进入功能页面。
 
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512301919741.png)
-
 ---
 
 ## 5. EEG模块使用说明
@@ -78,12 +80,12 @@ NeuroSignalPreprocessor/
 
 EEG 模块基于标准脑电信号处理流程设计，整体思路与 **MNE-Python / EEGLAB** 等主流科研工具保持一致，强调：
 
-- **流程可控**
+- **流程可控（step-by-step）**
 - **参数可解释**
 - **人工干预与自动处理结合**
 - **结果可复现**
 
-推荐预处理流程如下：
+推荐使用顺序如下：
 ```javascript
 Load Data
 → Mark Bad Channels
@@ -111,17 +113,14 @@ Load Data
 - `.vhdr`（BrainVision）
 
 #### 5.2.3 数据状态指示
-加载成功后，界面将显示：
+加载成功后，界面左侧将显示：
 - 当前数据状态（raw）
-- EEG 通道数量
-- 信号采样频率和时长
+- EEG / EOG 通道数量
+- 当前 bad channel 数量
 - 通道位置
-  
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512301930120.png)
 **通过点击 `Preview PSD` 按钮可查看信号的功率谱密度**
-
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512301935974.png)
-
 ---
 
 ### 5.3. EEG预处理
@@ -201,10 +200,11 @@ Load Data
 
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512302006007.png)
 
-#### 5.3.4 独立成分分析：ICA
+#### 5.3.4 ICA（独立成分分析）
 
 ##### 1）目的
-独立成分分析（Independent Component Analysis, ICA）是一种常用的盲源分离方法，用于将多通道 EEG 信号分解为若干统计独立的成分，从而实现对生理与非生理伪迹的识别与剔除。
+独立成分分析（Independent Component Analysis, ICA）是一种常用的盲源分离方法，  
+用于将多通道 EEG 信号分解为若干统计独立的成分，从而实现对生理与非生理伪迹的识别与剔除。
 
 在本软件中，ICA 主要用于分离和处理以下常见伪迹来源：
 
@@ -212,6 +212,12 @@ Load Data
 - **心电伪迹（ECG）**：心跳相关的周期性成分  
 - **肌电伪迹（EMG）**：高频、局部化的肌肉活动信号  
 - **高频噪声**：与真实脑活动无关的随机或系统性噪声
+
+
+**推荐流程**
+  - 1. 在完成滤波与坏道标记后执行 ICA
+  - 2. 结合 EOG 通道自动辅助识别伪迹成分
+  - 3. 人工确认并剔除无效成分
 
 ##### 2）ICA 参数说明
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512302032141.png)
@@ -294,7 +300,8 @@ Load Data
 
 ##### 6）应用 ICA 去伪迹（Apply ICA）
 
-- 在确认需要剔除的成分后，点击 **`Apply ICA (exclude selected comps)`** 按钮
+- 在确认需要剔除的成分后，点击  
+  **`Apply ICA (exclude selected comps)`** 按钮
 - 系统将基于所选成分，对原始数据进行重构并移除对应伪迹成分
 - ICA 应用完成后，系统将自动弹出结果可视化窗口，用于对去伪迹效果进行直观评估。
 
@@ -342,7 +349,8 @@ Load Data
 - **勾选该选项**：  
   插值完成后，已插值重建的通道将被从坏道列表中移除，并重新作为有效 EEG 通道参与后续分析。
 - **未勾选该选项**：  
-  插值完成后，通道信号已被重建，但其坏道标记将被保留，在后续分析中仍会被视为原始坏道，仅用于保持处理记录的可追溯性。
+  插值完成后，通道信号已被重建，但其坏道标记将被保留，  
+  在后续分析中仍会被视为原始坏道，仅用于保持处理记录的可追溯性。
 该设置不会影响插值本身的计算结果，仅影响通道在后续流程中的标记状态。
 
 确认无误后点击 **`Interpolate bads`** 按钮以执行插值操作。
@@ -366,7 +374,8 @@ Load Data
 - 频域特征
 - 功能连接特征
 #### 5.4.1 Epoch / 事件标记（Epoch / Mark）
-该模块用于将连续 EEG 信号切分为与事件（刺激/标记）相关的时间片段（epochs），以支持后续的事件相关分析。
+该模块用于将连续 EEG 信号切分为与事件（刺激/标记）相关的时间片段（epochs），
+以支持后续的事件相关分析。
 
 ##### 1) 支持模式
 - **连续数据模式**：不进行事件切分，保留连续信号结构。
@@ -385,16 +394,35 @@ Load Data
 
 ##### 3) 构建 Epochs
 
-- 单击选中**表格**中需要分析的事件标记（mark）
-- 点击 **`构建 epochs`** 按钮执行切分操作
-- 构建成功后，界面下方将显示 epoch 状态信息，包括：
-  - 是否已成功构建
-  - epoch 数量（`n_epochs`）
-  - 当前所选事件标记编号
+软件支持两种 epoch 构建方式：
+- 按**事件标记**构建 Epochs
+  - 选择“按 mark 切 epoch”模式。
+  - 根据数据情况选择 Mark 来源，例如 Annotations 或 Stim Events。
+  - 点击“扫描 marks”，软件会自动识别数据中的事件标记。
+  - 在表格中单击选中需要分析的事件标记（mark）。
+  - 设置 epoch 时间范围，例如 tmin 和 tmax。
+  - 点击“构建 epochs”按钮执行切分操作。
+
+![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512302131362.png)  
+
+- 按**固定时间窗口**构建 Epochs
+  - 适用于没有明确事件标记、或需要分析连续静息态 EEG 的数据。
+  - 选择 Fixed window epoch 模式。
+  - 设置窗口长度 window(s)，例如 4 秒。
+  - 设置窗口重叠时间 overlap(s)，例如 0 秒。
+  - 点击“构建 epochs”按钮，软件会将连续数据按固定时间窗口切分为多个 epochs。
+![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202605091404265.png)
+
+构建成功后，界面下方将显示 epoch 状态信息，包括：
+- 是否已成功构建
+- epoch 数量（n_epochs）
+- 若按事件构建：当前所选事件标记（mark）
+- 若按固定窗口构建：窗口长度和重叠时间
+- 构建得到的 epochs 可用于后续的特征提取、时频分析和功能连接分析。
+- 对于没有事件标记的连续数据，建议使用固定时间窗口构建 epochs。
 
 该结果可直接用于后续的特征提取、时频分析或功能连接分析。
 
-![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512302131362.png)
 
 #### 5.4.2 时域特征：熵特征
 该模块用于从 EEG 信号中提取多种熵类特征，以量化信号的复杂性与不确定性。
@@ -423,7 +451,7 @@ Load Data
 
 ##### 3）可视化与输出
 - 支持按单通道或通道平均方式显示结果
-- 可选择特定频段（如 α、β 波段）进行 ERD/ERS 分析（选择后需点击 **`更新图像`** 按钮）
+- 可选择特定频段（如 α、β 波段）进行 ERD/ERS 分析（选择后需点击**`更新图像`** 按钮）
 - 结果可导出用于后续统计分析或机器学习建模
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512302146721.png)
 
@@ -432,20 +460,21 @@ Load Data
 **可选择预定义频段（δ、θ、α、β 等）或自定义频率范围**
 ##### 1) 连接指标
 - **Coherence（相干性）**  
-  基于频域的线性相关度量，反映两个通道在特定频段内的幅值与相位一致性。适用于分析稳定的振荡同步，但对体积传导较为敏感。
+  基于频域的线性相关度量，反映两个通道在特定频段内的幅值与相位一致性。  
+  适用于分析稳定的振荡同步，但对体积传导较为敏感。
 
 - **COH（Complex Coherence）**  
   复数形式的相干性，保留相位差信息，可用于更精细的频域连接分析。
 
 - **PLV（Phase Locking Value）**  
   基于相位一致性的非线性指标，用于衡量信号间相位同步程度，对幅值变化不敏感，常用于事件相关或任务态分析。
-可参考：https://blog.csdn.net/qq_45538220/article/details/124435846?spm=1001.2014.3001.5501
+
 - **PLI（Phase Lag Index）**  
   基于相位滞后的连接指标，可在一定程度上抑制零时滞同步带来的体积传导影响，更强调具有方向性的相位关系。
 
 - **wPLI（Weighted Phase Lag Index）**  
   PLI 的加权改进版本，通过增强稳定相位滞后成分，提高对噪声的鲁棒性，在功能脑网络研究中被广泛采用。
-可参考：https://blog.csdn.net/qq_45538220/article/details/129873029?spm=1001.2014.3001.5501
+
 ##### 2) 连接矩阵与可视化
 - 计算结果以通道 × 通道的连接矩阵形式表示
 - 支持显示连接强度热图
@@ -461,7 +490,9 @@ Load Data
 ##### 4）日志（Log）
 
 日志模块用于记录用户在软件中的关键操作与数据处理过程，以增强分析流程的可追溯性与结果的可复现性。
+
 日志信息包括但不限于：
+
 - 数据载入与状态更新（如 raw / epoch / 插值状态）
 - 事件标记与 epoch 构建结果
 - 各类特征计算的启动与完成状态
@@ -476,6 +507,8 @@ Load Data
 
 ## 6. fNIRS模块使用说明
 本模块用于完成 fNIRS 数据的载入、预处理、事件切分及特征提取，支持基于血红蛋白浓度变化的任务相关分析。
+
+---
 
 ### 6.1 载入数据（Load Data）
 
@@ -492,7 +525,7 @@ Load Data
 #### 6.2.1 转换、质量控制与血红蛋白计算
 在 **Convert + QC + Hb** 页面中，系统依次执行：
 
-- 光强 --> 光密度（Optical Density）转换  
+- 光密度（Optical Density）转换  
 - 基于源–探测器距离与 SCI（Scalp Coupling Index）的质量控制  
 - 基于 Beer–Lambert 定律计算血红蛋白浓度变化（HbO / HbR）
 
@@ -500,8 +533,9 @@ Load Data
 
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512302159476.png)
 
+---
 
-#### 6.2.2 Filter + Epoch 
+#### 6.2.2 Filter + Epoch 可视化（Epoch Visualization）
 
 该模块用于对 fNIRS 血红蛋白信号进行带通滤波，以抑制低频漂移与高频生理噪声，保留与任务相关的血氧动力学变化。
 
@@ -519,8 +553,8 @@ Load Data
 ### 6.3 特征提取（Feature Extraction）
 #### 6.3.1 Epoch 可视化（Epoch Visualization）
 在 **Epoch Visualization** 页面中，可构建 epochs ，并对epochs进行检查与展示：
-- 支持选择血红蛋白类型（HbO或HbR）
-- 提供Evoke时程曲线、 epoch 热图（epoch Image）与联合视图（Joint plot）
+- 支持选择血红蛋白类型（如 HbO）
+- 提供 epoch 热图与联合视图（Joint plot）
 - 显示基线位置与任务相关响应变化
 该步骤有助于快速评估任务诱发的血氧动力学响应特征。
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512302200871.png)
@@ -531,9 +565,11 @@ Load Data
 
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512302201960.png)
 
+---
 
 #### 6.3.2 特征提取：Feature Extraction
 在 **Feature Extraction** 页面中，可从 epochs 中提取常用 fNIRS 特征：
+- 支持按条件（condition）聚合
 - 提取特征包括：
   - 均值（mean）
   - 标准差（std）
@@ -545,8 +581,6 @@ Load Data
 特征结果以表格形式展示，并可导出为 CSV 文件，用于后续统计分析或机器学习建模。
 
 ![](https://raw.githubusercontent.com/weisihong9/wshBlogPic/main/202512302201101.png)
-
----
 
 ### 6.4 数据保存（Save）
 预处理及特征提取完成后，可将结果数据保存到本地。保存操作不会修改原始数据文件，确保数据安全与可追溯性。
